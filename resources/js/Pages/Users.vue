@@ -7,7 +7,7 @@ defineProps({
 })
 </script>
 <template>
-    <h1>Users</h1>
+    <h1 class="font-bold text-4xl">Users</h1>
 
     <Nav />
 
