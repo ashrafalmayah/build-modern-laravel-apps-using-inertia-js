@@ -7,6 +7,13 @@ let username = computed(() => usePage().props.auth.user.username);
 </script>
 
 <template>
+    <Head>
+        <meta
+            name="description"
+            content="The default description"
+            head-key="description"
+        />
+    </Head>
     <header class="bg-gray-200 p-4 flex space-x-6 items-center justify-center">
         <div class="absolute left-6 flex items-center space-x-2">
             <h1 class="font-bold text-xl">My App</h1>

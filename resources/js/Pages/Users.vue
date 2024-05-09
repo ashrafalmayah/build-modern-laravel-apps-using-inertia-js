@@ -5,6 +5,8 @@ defineProps({
 </script>
 
 <template>
+    <Head title="Users" />
+
     <h1 class="font-bold text-2xl">Users</h1>
 
     <div class="mt-[700px]">
