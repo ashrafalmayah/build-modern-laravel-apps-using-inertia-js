@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-    time: String,
+    users: Array
 });
 </script>
 
@@ -9,14 +9,7 @@ defineProps({
 
     <h1 class="font-bold text-2xl">Users</h1>
 
-    <div class="mt-[700px]">
-        <p>The time is {{ time }}.</p>
-
-        <Link
-            class="text-blue-600 hover-underline"
-            preserve-scroll
-            href="/users"
-            >Refresh</Link
-        >
-    </div>
+    <ul>
+        <li v-for="user in users" :key="user.id" v-text="user.name"></li>
+    </ul>
 </template>
