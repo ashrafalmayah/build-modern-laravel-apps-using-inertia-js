@@ -1,14 +1,18 @@
 <script setup>
+import { computed } from "vue";
+
 let props = defineProps({
     links: Array,
 });
 
-let filteredLinks = props.links.filter(function (link) {
-    return ! isNaN(link.label);
-});
+let filteredLinks = computed(() =>
+    props.links.filter(function (link) {
+        return !isNaN(link.label);
+    })
+);
 
-let previousUrl = props.links[0].url;
-let nextUrl = props.links[props.links.length - 1].url;
+let previousUrl = computed(() => props.links[0].url);
+let nextUrl = computed(() => props.links[props.links.length - 1].url);
 </script>
 
 <template>
