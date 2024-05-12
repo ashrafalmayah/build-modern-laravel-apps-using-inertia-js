@@ -27,7 +27,16 @@ watch(search, function (value) {
     <Head title="Users" />
 
     <div class="flex justify-between mb-4">
-        <h1 class="font-bold text-2xl">Users</h1>
+        <div class="flex items-center space-x-6">
+            <h1 class="font-bold text-2xl">Users</h1>
+            <Link
+                href="/users/create"
+                class="rounded-md bg-blue-500 px-8 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600"
+            >
+                New user
+            </Link>
+        </div>
+
         <input
             class="border rounded-lg px-2"
             type="text"

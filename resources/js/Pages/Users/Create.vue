@@ -2,6 +2,10 @@
 import { router } from "@inertiajs/vue3";
 import { reactive } from "vue";
 
+defineProps({
+    errors: Object,
+});
+
 let form = reactive({
     name: "",
     email: "",
@@ -29,11 +33,18 @@ let submit = () => {
 
             <input
                 class="block w-full rounded-md px-4 py-2 border"
+                :class="errors.name ? 'border-red-500' : ''"
                 type="text"
                 autocomplete="name"
                 v-model="form.name"
                 name="name"
                 id="name"
+                required
+            />
+            <div
+                v-if="errors.name"
+                class="text-xs text-red-500 mt-1"
+                v-text="errors.name"
             />
         </div>
         <div class="px-8">
@@ -45,11 +56,18 @@ let submit = () => {
 
             <input
                 class="block w-full rounded-md px-4 py-2 border"
+                :class="errors.email ? 'border-red-500' : ''"
                 type="email"
                 autocomplete="username"
                 v-model="form.email"
                 name="email"
                 id="email"
+                required
+            />
+            <div
+                v-if="errors.email"
+                class="text-xs text-red-500 mt-1"
+                v-text="errors.email"
             />
         </div>
         <div class="px-8">
@@ -59,13 +77,22 @@ let submit = () => {
                 >Password</label
             >
 
-            <input
-                class="block w-full rounded-md px-4 py-2 border"
-                type="password"
-                autocomplete="new-password"
-                v-model="form.password"
-                name="password"
-                id="password"
+            <div class="relative">
+                <input
+                    class="block w-full rounded-md px-4 py-2 border"
+                    :class="errors.password ? 'border-red-500' : ''"
+                    type="password"
+                    autocomplete="new-password"
+                    v-model="form.password"
+                    name="password"
+                    id="password"
+                    required
+                />
+            </div>
+            <div
+                v-if="errors.password"
+                class="text-xs text-red-500 mt-1"
+                v-text="errors.password"
             />
         </div>
         <div class="px-8">
