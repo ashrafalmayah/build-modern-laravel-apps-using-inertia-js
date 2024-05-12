@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('login', [LoginController::class, 'create'])->name('login');
 Route::post('login', [LoginController::class, 'store']);
-Route::post('logout', [LoginController::class, 'destroy']);
+Route::post('logout', [LoginController::class, 'destroy'])->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
@@ -30,20 +30,30 @@ Route::middleware('auth')->group(function () {
                 ->where('name', 'like', '%' . request('search') . '%')
                 ->paginate()
                 ->withQueryString()
-                ->through(fn($user) => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email]),
-            "filters" => request()->only(['search'])
+                ->through(fn($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'can' => [
+                        'edit' => auth()->user()->can('edit', $user)
+                    ]
+                ]),
+            "filters" => request()->only(['search']),
+            'can' => [
+                'createUser' => auth()->user()->can('create', User::class)
+            ]
         ]);
     });
 
     Route::get('/users/create', function () {
         return inertia('Users/Create');
-    });
+    })->can('create', User::class);
 
     Route::post('/users', function () {
         $attributes = request()->validate([
             'name' => 'required',
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:4', 'max:15']
+            'password' => ['required', 'min:4', 'max:15'],
         ]);
 
         User::create($attributes);

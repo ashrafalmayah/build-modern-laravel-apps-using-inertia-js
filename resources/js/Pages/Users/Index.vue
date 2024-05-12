@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 let props = defineProps({
     users: Object,
     filters: Object,
+    can: Boolean
 });
 
 let search = ref(props.filters.search);
@@ -31,6 +32,7 @@ watch(search, debounce(function (value) {
         <div class="flex items-center space-x-6">
             <h1 class="font-bold text-2xl">Users</h1>
             <Link
+                v-if="can.createUser"
                 href="/users/create"
                 class="rounded-md bg-blue-500 px-8 py-1 text-sm font-bold text-white transition-colors duration-300 hover:bg-blue-600"
             >
@@ -77,7 +79,7 @@ watch(search, debounce(function (value) {
                             </div>
                         </td>
 
-                        <td class="px-4 py-4 text-sm whitespace-nowrap">
+                        <td v-if="user.can.edit" class="px-4 py-4 text-sm whitespace-nowrap">
                             <div class="flex items-center gap-x-6">
                                 <Link
                                     :href="`users/${user.id}/edit`"
